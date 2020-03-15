@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dynamically Add Remove Table Rows in JavaScript</title>
+<style>
+        body
+		{
+		background-image:linear-gradient(lightblue,lightblue,lightblue);
+		background-image:no-repeat;
+		}
+        table {
+            width: 70%;
+            font: 17px Calibri;
+        }
+        table, th, td {
+            border: solid 1px #000;
+            border-collapse: collapse;
+            padding: 2px 3px;
+            text-align: center;
+        }
+		.button {
+				  background-color: #008CBA; 
+				  border: none;
+				  color: white;
+				  padding: 15px 20px;
+				  text-align: center;
+				  text-decoration: none;
+				  display: inline-block;
+				  font-size: 16px;
+				  margin: 4px 2px;
+				  cursor: pointer;
+				}
+    </style>
+</head>
+<body onload="createTable()">
+<h3><center>Repeat Table</center></h3>
+    <p>
+        <input type="button" class="button" id="addRow" value="Add New Row" onclick="addRow()" />
+    </p>
+
+    <!--THE CONTAINER WHERE WE'll ADD THE DYNAMIC TABLE-->
+    <div id="cont"></div>
+</body>
+<script src="jquery.min.js"></script>
+<script>
+    var arrHead = new Array();
+    arrHead = ['Seraial Number', 'Action'];     
+    function createTable() {
+        var empTable = document.createElement('table');
+        empTable.setAttribute('id', 'empTable');           
+
+        var tr = empTable.insertRow(-1);
+
+        for (var h = 0; h < arrHead.length; h++) {
+            var th = document.createElement('th');          
+            th.innerHTML = arrHead[h];
+            tr.appendChild(th);
+        }
+
+        var div = document.getElementById('cont');
+        div.appendChild(empTable);    
+		addRow();
+		addRow();
+    }
+
+    
+    function addRow() {
+        var empTab = document.getElementById('empTable');
+
+        var rowCnt = empTab.rows.length;       
+		//alert(rowCnt);
+        var tr = empTab.insertRow();     
+        //tr = empTab.insertRow();
+
+        for (var c = 0; c < arrHead.length; c++) {
+            var td = document.createElement('td');         
+            td = tr.insertCell(c);
+
+            if (c == 1) {           
+                
+                var button = document.createElement('input');
+                button.setAttribute('type', 'button');
+                button.setAttribute('value', 'Delete');
+                button.setAttribute('onclick', 'removeRow(this)');
+
+                td.appendChild(button);
+            }
+            else {
+				var text = document.createTextNode(rowCnt);
+                td.appendChild(text);
+			
+            }
+        }
+    }
+
+    
+    function removeRow(oButton) {
+        //var empTab = document.getElementById('empTable');
+        //empTab.deleteRow(oButton.parentNode.parentNode.rowIndex);      
+		//event.preventDefault();
+		   var table= 'staff';
+		   var row = $(oButton).closest('tr');
+		   var id = row.attr("id");
+		   //alert("Deleting id #" + id);
+		   setTimeout(function() { // Simulating ajax
+			   var siblings = row.siblings();
+			   row.remove();
+			   siblings.each(function(index) {
+				 $(row).children().first().text(index);
+			   });
+		   }, 100);
+    }
+
+    
+    function submit() {
+        var myTab = document.getElementById('empTable');
+        var values = new Array();
+
+      
+        for (row = 1; row < myTab.rows.length - 1; row++) {
+            for (c = 0; c < myTab.rows[row].cells.length; c++) {   
+
+                var element = myTab.rows.item(row).cells[c];
+                if (element.childNodes[0].getAttribute('type') == 'text') {
+                    values.push("'" + element.childNodes[0].value + "'");
+                }
+            }
+        }
+        
+        
+        console.log(values);
+    }
+</script>
+</html>

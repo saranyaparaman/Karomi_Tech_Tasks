@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>About Canvas Drawing</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+<script>
+   function load() {
+   var context = document.getElementById('main').getContext("2d");
+   var left = document.getElementById('left');
+   var down = document.getElementById('down');
+   var right = document.getElementById('right');
+   var del = document.getElementById('del');
+   var imgLoaded = false;
+   var posX = 250;
+   var posY = 50;
+   var snap = 10;
+
+   var img = new Image();
+   img.onload = function() {
+      imgLoaded = true;
+      context.drawImage(img, posX, posY);
+   };
+   img.src = "75x150.png";
+
+   left.onclick = function() {
+      if (!imgLoaded) return;
+      posX = posX - snap;
+      context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+      context.drawImage(img, posX, posY);
+   };
+	
+   // down button click
+   down.onclick = function() {
+      if (!imgLoaded) return;
+      posY = posY + snap;
+      context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+      context.drawImage(img, posX, posY);
+   };
+	
+   // right button click
+   right.onclick = function() {
+      if (!imgLoaded) return;
+      posX = posX + snap;
+      context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+      context.drawImage(img, posX, posY);
+   };
+	// Delete button click
+   del.onclick = function() {
+      if (!imgLoaded) return;
+      posX = posX + snap;
+      context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+      //context.drawImage(img, posX, posY);
+   };
+}
+  
+    </script>
+    <script src="min.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+    
+    <header>
+	<h3><center>About Canvas Drawing</center></h3>
+        <div class="profileLogo">
+		
+        <aside class="socialNetworkNavBar">
+		<div id="draw" style="margin-right: 50px;" class="socialNetworkNav">
+               
+                <button onclick="load();">Draw</button>
+
+            </div>
+            <div id="left" style="margin-right: 50px;" class="socialNetworkNav">
+                
+                <button class="left">Left</button>
+
+            </div>
+			<div id="del" style="margin-right: 50px;" class="socialNetworkNav">
+               
+                <button class="">Delete</button>
+            </div>
+			 <div id="right" style="margin-right: 50px;" class="socialNetworkNav">
+               
+                <button class="">Right</button>
+            </div>
+            <div id="down" style="margin-right: 50px;" class="socialNetworkNav"></div>
+                
+            
+			
+        </aside>            
+        </div>
+        <section>
+            <div class="wrapper">
+                <div class="container">
+                    <div class="canvas-container">
+
+                        <canvas id="main" width="500px" height="250px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+    </header>
+    
+
+</body>
+
+</html>
